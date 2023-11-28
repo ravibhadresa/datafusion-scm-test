@@ -1,0 +1,48 @@
+{
+  "name": "GCS_BQ_v1",
+  "appVersion": "548ae564-8e2f-11ee-8077-929076ce2ed1",
+  "description": "first draft of the pipeline",
+  "change": {
+    "author": "cdap",
+    "creationTimeMillis": 1701204442843,
+    "latest": true
+  },
+  "configuration": "{\"resources\":{\"memoryMB\":2048.0,\"virtualCores\":1.0},\"driverResources\":{\"memoryMB\":2048.0,\"virtualCores\":1.0},\"connections\":[{\"from\":\"GCS\",\"to\":\"BigQuery\"}],\"comments\":[],\"postActions\":[],\"properties\":{},\"processTimingEnabled\":true,\"stageLoggingEnabled\":false,\"stages\":[{\"name\":\"GCS\",\"plugin\":{\"name\":\"GCSFile\",\"type\":\"batchsource\",\"label\":\"GCS\",\"artifact\":{\"name\":\"google-cloud\",\"version\":\"0.22.2\",\"scope\":\"SYSTEM\"},\"properties\":{\"useConnection\":\"false\",\"project\":\"auto-detect\",\"serviceAccountType\":\"filePath\",\"serviceFilePath\":\"auto-detect\",\"referenceName\":\"authorised_view_test.Sample.csv\",\"path\":\"gs://authorised_view_test/Sample.csv\",\"format\":\"csv\",\"sampleSize\":\"1000\",\"filenameOnly\":\"false\",\"recursive\":\"false\",\"ignoreNonExistingFolders\":\"false\",\"encrypted\":\"false\",\"fileEncoding\":\"UTF-8\",\"schema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"etlSchemaBody\\\",\\\"fields\\\":[{\\\"name\\\":\\\"firstname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"lastname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"balance\\\",\\\"type\\\":\\\"int\\\"},{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"string\\\"}]}\",\"enableQuotedValues\":\"false\",\"skipHeader\":\"false\"}},\"outputSchema\":[{\"name\":\"etlSchemaBody\",\"schema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"etlSchemaBody\\\",\\\"fields\\\":[{\\\"name\\\":\\\"firstname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"lastname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"balance\\\",\\\"type\\\":\\\"int\\\"},{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"string\\\"}]}\"}],\"id\":\"GCS\"},{\"name\":\"BigQuery\",\"plugin\":{\"name\":\"BigQueryTable\",\"type\":\"batchsink\",\"label\":\"BigQuery\",\"artifact\":{\"name\":\"google-cloud\",\"version\":\"0.22.2\",\"scope\":\"SYSTEM\"},\"properties\":{\"useConnection\":\"false\",\"project\":\"auto-detect\",\"serviceAccountType\":\"filePath\",\"serviceFilePath\":\"auto-detect\",\"referenceName\":\"bq-sink-test\",\"dataset\":\"ravibhadresa\",\"table\":\"ravibhadresa_df_test\",\"operation\":\"insert\",\"truncateTable\":\"false\",\"allowSchemaRelaxation\":\"false\",\"location\":\"US\",\"createPartitionedTable\":\"false\",\"partitioningType\":\"TIME\",\"partitionFilterRequired\":\"false\",\"schema\":\"{\\\"name\\\":\\\"etlSchemaBody\\\",\\\"type\\\":\\\"record\\\",\\\"fields\\\":[{\\\"name\\\":\\\"firstname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"lastname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"balance\\\",\\\"type\\\":\\\"int\\\"},{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"long\\\"}]}\"}},\"outputSchema\":[{\"name\":\"etlSchemaBody\",\"schema\":\"{\\\"name\\\":\\\"etlSchemaBody\\\",\\\"type\\\":\\\"record\\\",\\\"fields\\\":[{\\\"name\\\":\\\"firstname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"lastname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"balance\\\",\\\"type\\\":\\\"int\\\"},{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"long\\\"}]}\"}],\"inputSchema\":[{\"name\":\"GCS\",\"schema\":\"{\\\"type\\\":\\\"record\\\",\\\"name\\\":\\\"etlSchemaBody\\\",\\\"fields\\\":[{\\\"name\\\":\\\"firstname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"lastname\\\",\\\"type\\\":\\\"string\\\"},{\\\"name\\\":\\\"balance\\\",\\\"type\\\":\\\"int\\\"},{\\\"name\\\":\\\"address\\\",\\\"type\\\":\\\"string\\\"}]}\"}],\"id\":\"BigQuery\"}],\"schedule\":\"0 1 */1 * *\",\"engine\":\"spark\",\"numOfRecordsPreview\":100.0,\"rangeRecordsPreview\":{\"min\":1.0,\"max\":\"5000\"},\"description\":\"first draft of the pipeline\",\"maxConcurrentRuns\":1.0}",
+  "datasets": [],
+  "programs": [
+    {
+      "type": "Spark",
+      "app": "GCS_BQ_v1",
+      "name": "phase-1",
+      "description": "Sources \u0027GCS\u0027 to sinks \u0027BigQuery\u0027."
+    },
+    {
+      "type": "Workflow",
+      "app": "GCS_BQ_v1",
+      "name": "DataPipelineWorkflow",
+      "description": "Data Pipeline Workflow"
+    }
+  ],
+  "plugins": [
+    {
+      "id": "BigQuery",
+      "name": "BigQueryTable",
+      "type": "batchsink"
+    },
+    {
+      "id": "GCS",
+      "name": "GCSFile",
+      "type": "batchsource"
+    },
+    {
+      "id": "GCS:csv",
+      "name": "csv",
+      "type": "validatingInputFormat"
+    }
+  ],
+  "artifact": {
+    "name": "cdap-data-pipeline",
+    "version": "6.9.2",
+    "scope": "SYSTEM"
+  }
+}
