@@ -1,7 +1,7 @@
 {
   "name": "GCS_BQ_v1",
   "appVersion": "548ae564-8e2f-11ee-8077-929076ce2ed1",
-  "description": "first draft of the pipeline",
+  "description": "first draft of the pipeline. Edited from github",
   "change": {
     "author": "cdap",
     "creationTimeMillis": 1701204442843,
